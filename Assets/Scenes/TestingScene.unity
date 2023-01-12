@@ -587,7 +587,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 60
   orthographic: 1
   orthographic size: 7
@@ -819,7 +819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 890889724}
-  animator: {fileID: 0}
+  animator: {fileID: 1363079749}
   WalkSpeed: 1.96
   RunSpeed: 4
   JumpForce: 400
@@ -1189,6 +1189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1363079748}
   - component: {fileID: 1363079747}
+  - component: {fileID: 1363079749}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -1237,7 +1238,7 @@ SpriteRenderer:
   m_SortingLayerID: -279904477
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 911c665e376853e458160cd9de1a38b5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9eae6303f414de908ae22c15caccb825, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1257,12 +1258,32 @@ Transform:
   m_GameObject: {fileID: 1363079746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3285979, y: 0.33946943, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 890889723}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1363079749
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363079746}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 54933928f97136ff5a7c912a5abedc75, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!213 &1380253800
 Sprite:
   m_ObjectHideFlags: 0
@@ -1536,8 +1557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acbd7e86ac86a3b4a96496ac998008ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleBound: {x: 64.11358, y: 14.033849}
-  offset: {x: 25.911686, y: 5.67151}
+  scaleBound: {x: 97.974144, y: 16.504103}
+  offset: {x: 16.211414, y: 7.870639}
   maxXlimit: {x: 0, y: 0}
   maxYlimit: {x: 0, y: 0}
 --- !u!4 &1546341969

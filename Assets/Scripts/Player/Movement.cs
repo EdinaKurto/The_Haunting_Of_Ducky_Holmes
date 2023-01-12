@@ -8,7 +8,6 @@ public class Movement : MonoBehaviour
     public Animator animator;
 
     public float WalkSpeed = 1.96f;
-    public float RunSpeed = 4f;
     public float JumpForce = 400;
 
     [Range(0, .3f)]
@@ -23,7 +22,6 @@ public class Movement : MonoBehaviour
     private bool grounded;
     private float groundCheckRadius = .2f;
     private Vector3 velocity = Vector3.zero;
-    bool isRunning;
 
     Vector2 KeyboardInput;
     Vector2 LastInput;
@@ -36,7 +34,6 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         Move();
-        isRunning = Input.GetKey(KeyCode.LeftShift);
     }
 
     private void FixedUpdate()
@@ -62,6 +59,7 @@ public class Movement : MonoBehaviour
     {
         KeyboardInput.x = Input.GetAxisRaw("Horizontal");
 
+
         Vector3 targetVelocity = new Vector2(KeyboardInput.x * 10f, rb.velocity.y);
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmooth);
 
@@ -76,5 +74,9 @@ public class Movement : MonoBehaviour
             LastInput = KeyboardInput;
             transform.localScale = new Vector3(LastInput.x, 1, 0);
         }
+
+        // Trigger Animation
+        animator.SetBool("Grounded", grounded);
+        animator.SetBool("Walking", KeyboardInput.sqrMagnitude > 0);
     }
 }
