@@ -7,8 +7,8 @@ public class Movement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
 
-    public float WalkSpeed = 1.96f;
-    public float JumpForce = 400;
+    public float WalkSpeed = 2.7f;
+    public float JumpForce = 500f;
 
     [Range(0, .3f)]
     public float movementSmooth = .05f;
