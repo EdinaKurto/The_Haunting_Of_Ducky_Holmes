@@ -47,6 +47,9 @@ TagManager:
   - name: Walls
     uniqueID: 2973716503
     locked: 0
+  - name: Wood
+    uniqueID: 2475867027
+    locked: 0
   - name: Object
     uniqueID: 3944653927
     locked: 0
