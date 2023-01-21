@@ -11,7 +11,7 @@ public class Attack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             var temp = Instantiate(Prefab, Pivot.position, Quaternion.identity);
-            temp.GetComponent<Rigidbody2D>().AddForce(transform.localScale.x * Vector3.right * Power);
+            temp.GetComponent<Rigidbody2D>().AddForce(transform.localScale.x * Vector2.right * Power);
             Destroy(temp, 6);
         }
     }
