@@ -1,4 +1,3 @@
-// using Settings;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,22 +7,19 @@ public class Movement : MonoBehaviour
 
     public float WalkSpeed = 2.7f;
     public float JumpForce = 500f;
-
-    [Range(0, .3f)]
-    public float movementSmooth = .05f;
+    public int GroundedDrag, AirDrag;
 
     [SerializeField] private LayerMask hidableLayer;
 
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundTransform;
-    [SerializeField] private Transform ceilingTransform;
 
     public UnityEvent OnLand;
 
     private Animator animator;
     private bool grounded;
+    private bool hasJumped;
     private float groundCheckRadius = .2f;
-    private Vector3 velocity = Vector3.zero;
 
     Vector2 KeyboardInput;
     Vector2 LastInput;
@@ -36,7 +32,19 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
+        KeyboardInput.x = Input.GetAxisRaw("Horizontal");
+
+        if (grounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            grounded = false;
+            hasJumped = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
         animator.SetBool("Hidden", PlayerManager.Instance.Hidden);
+
         if (PlayerManager.Instance.Hidden)
         {
             rb.velocity = Vector2.zero;
@@ -46,13 +54,11 @@ public class Movement : MonoBehaviour
         }
 
         Move();
-    }
 
-    private void FixedUpdate()
-    {
         bool wasGrounded = grounded;
         grounded = false;
 
+        // Check for nearby colliders
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundTransform.position, groundCheckRadius, groundLayer);
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -60,26 +66,24 @@ public class Movement : MonoBehaviour
             {
                 grounded = true;
 
-                // for a particle effect, sfx etc
+                // Play a particle effect, sfx etc
                 if (!wasGrounded)
-                    OnLand.Invoke();
+                                        OnLand.Invoke();
             }
         }
     }
 
     void Move()
     {
-        KeyboardInput.x = Input.GetAxisRaw("Horizontal");
+        rb.drag = grounded ? GroundedDrag : AirDrag;
 
-
-        Vector3 targetVelocity = new Vector2(KeyboardInput.x * 10f, rb.velocity.y);
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmooth);
-
-        if (grounded && Input.GetKeyDown(KeyCode.Space))
+        if (hasJumped)
         {
-            grounded = false;
-            rb.AddForce(new Vector2(0f, JumpForce));
+            rb.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+            hasJumped = false;
         }
+
+        rb.AddForce((KeyboardInput.x * WalkSpeed) * Vector2.right);
 
         if (KeyboardInput.sqrMagnitude > 0)
         {
