@@ -10,11 +10,6 @@ public class Interact : MonoBehaviour
 
     private LTDescr tween;
 
-    void Awake()
-    {
-        var tween = new LeanTween();
-    }
-
     void Update()
     {
         var obj = Physics2D.OverlapCircle(transform.position, DetectionRadius, InteractableLayer);

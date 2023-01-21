@@ -5,7 +5,6 @@ using UnityEngine.Events;
 public class Movement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public Animator animator;
 
     public float WalkSpeed = 1.96f;
     public float JumpForce = 400;
@@ -13,12 +12,15 @@ public class Movement : MonoBehaviour
     [Range(0, .3f)]
     public float movementSmooth = .05f;
 
+    [SerializeField] private LayerMask hidableLayer;
+
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundTransform;
     [SerializeField] private Transform ceilingTransform;
 
     public UnityEvent OnLand;
 
+    private Animator animator;
     private bool grounded;
     private float groundCheckRadius = .2f;
     private Vector3 velocity = Vector3.zero;
@@ -29,10 +31,20 @@ public class Movement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = PlayerManager.Instance.PlayerAnimator;
     }
 
     private void Update()
     {
+        animator.SetBool("Hidden", PlayerManager.Instance.Hidden);
+        if (PlayerManager.Instance.Hidden)
+        {
+            rb.velocity = Vector2.zero;
+            animator.SetBool("Walking", false);
+            animator.SetBool("Grounded", true);
+            return;
+        }
+
         Move();
     }
 
@@ -63,7 +75,7 @@ public class Movement : MonoBehaviour
         Vector3 targetVelocity = new Vector2(KeyboardInput.x * 10f, rb.velocity.y);
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref velocity, movementSmooth);
 
-        if (grounded && Input.GetKey(KeyCode.Space))
+        if (grounded && Input.GetKeyDown(KeyCode.Space))
         {
             grounded = false;
             rb.AddForce(new Vector2(0f, JumpForce));
