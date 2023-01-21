@@ -68,7 +68,7 @@ public class Movement : MonoBehaviour
 
                 // Play a particle effect, sfx etc
                 if (!wasGrounded)
-                                        OnLand.Invoke();
+                    OnLand.Invoke();
             }
         }
     }
