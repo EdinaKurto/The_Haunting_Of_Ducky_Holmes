@@ -21,18 +21,21 @@ public class Movement : MonoBehaviour
     private bool hasJumped;
     private float groundCheckRadius = .2f;
 
-    Vector2 KeyboardInput;
+    Vector2 keyboardInput;
     Vector2 LastInput;
+    PlayerManager manager;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = PlayerManager.Instance.PlayerAnimator;
+        manager = PlayerManager.Instance;
+
+        animator = manager.PlayerAnimator;
+        rb = manager.RB;
     }
 
     private void Update()
     {
-        KeyboardInput.x = Input.GetAxisRaw("Horizontal");
+        keyboardInput.x = Input.GetAxisRaw("Horizontal");
 
         if (grounded && Input.GetKeyDown(KeyCode.Space))
         {
@@ -43,15 +46,8 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        animator.SetBool("Hidden", PlayerManager.Instance.Hidden);
-
-        if (PlayerManager.Instance.Hidden)
-        {
-            rb.velocity = Vector2.zero;
-            animator.SetBool("Walking", false);
-            animator.SetBool("Grounded", true);
+        if (manager.Hidden)
             return;
-        }
 
         Move();
 
@@ -83,16 +79,16 @@ public class Movement : MonoBehaviour
             hasJumped = false;
         }
 
-        rb.AddForce((KeyboardInput.x * WalkSpeed) * Vector2.right);
+        rb.AddForce((keyboardInput.x * WalkSpeed) * Vector2.right);
 
-        if (KeyboardInput.sqrMagnitude > 0)
+        if (keyboardInput.sqrMagnitude > 0)
         {
-            LastInput = KeyboardInput;
+            LastInput = keyboardInput;
             transform.localScale = new Vector3(LastInput.x, 1, 0);
         }
 
         // Trigger Animation
         animator.SetBool("Grounded", grounded);
-        animator.SetBool("Walking", KeyboardInput.sqrMagnitude > 0);
+        animator.SetBool("Walking", keyboardInput.sqrMagnitude > 0);
     }
 }

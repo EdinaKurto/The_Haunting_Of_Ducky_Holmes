@@ -16,7 +16,7 @@ TagManager:
   - Hidable
   - IgnorePlatform
   - Player
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -55,6 +55,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 4015062819
+    locked: 0
+  - name: Enemy
+    uniqueID: 739623667
     locked: 0
   - name: Front
     uniqueID: 1354353891
