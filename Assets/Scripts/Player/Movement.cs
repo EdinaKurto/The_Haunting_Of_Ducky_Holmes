@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        manager = PlayerManager.Instance;
+        manager = GetComponent<PlayerManager>();
 
         animator = manager.PlayerAnimator;
         rb = manager.RB;

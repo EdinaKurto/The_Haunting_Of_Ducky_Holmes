@@ -9,6 +9,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
 
     public UnityEvent OnHide;
     public UnityEvent OnOut;
+    public UnityEvent OnCaught;
 
     [HideInInspector] public bool wasHidden = false;
 
@@ -32,5 +33,11 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         PlayerAnimator.SetBool("Hidden", false);
         Hidden = false;
         OnOut.Invoke();
+    }
+
+    public void Caught()
+    {
+        OnCaught.Invoke();
+        Debug.Log("CAUGHT! - Game Over");
     }
 }
