@@ -1,49 +1,50 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-   private float dirX;
-   private float moveSpeed = 7f;
-   private Rigidbody2D rb;
+    private float dirX;
+    private float moveSpeed = 7f;
+    private Rigidbody2D rb;
 
-   [SerializeField] private GameObject gotchaText;
+    public LayerMask PlayerMask;
 
-   private void Start()
-   {
-      gotchaText.SetActive(false);
-      rb = GetComponent<Rigidbody2D>();
-      dirX = -1f;
-      
-   }
+    [SerializeField] private GameObject gotchaText;
 
-   private void Update()
-   {
-      if (transform.position.x < -9f)
-         dirX = 1f;
-      else if (transform.position.x < 9f)
-         dirX = -1f;
+    private void Awake()
+    {
+        //   gotchaText?.SetActive(false);
+        rb = GetComponent<Rigidbody2D>();
+        dirX = -1f;
+    }
 
-   }
+    private void Update()
+    {
+        if (transform.position.x < -9f)
+            dirX = 1f;
+        else if (transform.position.x < 9f)
+            dirX = -1f;
 
-   private void FixedUpdate()
-   {
-      rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+    }
 
-   }
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
-   private void OnTriggerEnter2D(Collider2D other)
-   {
-      if (other.gameObject.name.Equals("Enemy_idle"))
-         gotchaText.SetActive(true);
+    }
 
-   }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (((1 << other.gameObject.layer) & PlayerMask) != 0)
+        {
+            Debug.Log("Caught the Duck");
+        }
+    }
 
-   private void OnTriggerExit2D(Collider2D other)
-   {
-      if (other.gameObject.name.Equals("Enemy_idle"))
-         gotchaText.SetActive(false);
-   }
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (((1 << other.gameObject.layer) & PlayerMask) != 0)
+        {
+            Debug.Log("Lost the Duck");
+        }
+    }
 }
