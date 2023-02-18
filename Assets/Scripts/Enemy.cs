@@ -2,34 +2,38 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private float dirX;
-    private float moveSpeed = 7f;
     private Rigidbody2D rb;
+    public SpriteRenderer Sprite;
 
+    public Vector2 Bound = new Vector2(1, 1);
     public LayerMask PlayerMask;
-
-    [SerializeField] private GameObject gotchaText;
+    public float Speed = 7f;
+    public bool DirectionRight;
 
     private void Awake()
     {
-        //   gotchaText?.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
-        dirX = -1f;
     }
 
     private void Update()
     {
-        if (transform.position.x < -9f)
-            dirX = 1f;
-        else if (transform.position.x < 9f)
-            dirX = -1f;
+        if (transform.position.x <= Bound.x)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            DirectionRight = false;
+        }
+
+        if (transform.position.x >= Bound.y)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            DirectionRight = true;
+        }
 
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
-
+        rb.velocity = new Vector2((DirectionRight ? -1 : 1) * Speed, rb.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
