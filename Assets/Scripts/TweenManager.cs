@@ -3,7 +3,8 @@ using UnityEngine.Events;
 
 public enum AnimTypes
 {
-    Move,
+    MoveUI,
+    Move2D,
     Scale,
     ScaleX,
     ScaleY,
@@ -62,8 +63,11 @@ public class TweenManager : MonoBehaviour
 
         switch (AnimationType)
         {
-            case AnimTypes.Move:
-                Move();
+            case AnimTypes.MoveUI:
+                MoveUI();
+                break;
+            case AnimTypes.Move2D:
+                Move2D();
                 break;
             case AnimTypes.Scale:
                 Scale();
@@ -102,12 +106,20 @@ public class TweenManager : MonoBehaviour
         });
     }
 
-    private void Move()
+    private void MoveUI()
     {
         if (Offset)
             Target.transform.localPosition = From;
 
         _tweenObject = LeanTween.move(Target.GetComponent<RectTransform>(), To, Duration);
+    }
+
+    private void Move2D()
+    {
+        if (Offset)
+            Target.transform.localPosition = From;
+
+        _tweenObject = LeanTween.move(Target, To, Duration);
     }
 
     private void Fade()
