@@ -11,8 +11,6 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     public UnityEvent OnOut;
     public UnityEvent OnCaught;
 
-    [HideInInspector] public bool wasHidden = false;
-
     public void Hide()
     {
         if (!Hidden)
