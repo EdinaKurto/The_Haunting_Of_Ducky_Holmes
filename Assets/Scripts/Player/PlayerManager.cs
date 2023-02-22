@@ -6,6 +6,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     public bool Hidden;
     public Animator PlayerAnimator;
     public Rigidbody2D RB;
+    public AudioSource Source;
 
     public UnityEvent OnHide;
     public UnityEvent OnOut;
@@ -37,5 +38,10 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     {
         OnCaught.Invoke();
         Debug.Log("CAUGHT! - Game Over");
+    }
+
+    public void PlayStepSound(AudioClip clip)
+    {
+        Source.PlayOneShot(clip);
     }
 }
