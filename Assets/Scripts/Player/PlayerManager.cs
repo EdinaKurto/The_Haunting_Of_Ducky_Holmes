@@ -12,8 +12,20 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     public UnityEvent OnOut;
     public UnityEvent OnCaught;
 
+    public Transform StartPivot;
     public bool HasReachedCheckPoint;
     public Transform CheckPointPivot;
+
+    public void OnReachCheckPoint()
+    {
+        HasReachedCheckPoint = true;
+    }
+
+    public void Respawn()
+    {
+        this.gameObject.transform.position = HasReachedCheckPoint ? CheckPointPivot.position : StartPivot.position;
+        Out();
+    }
 
     public void Hide()
     {

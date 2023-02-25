@@ -13,7 +13,7 @@ public enum AnimTypes
 
 public class TweenManager : MonoBehaviour
 {
-
+    public string TweenName = "New Tween";
     private LTDescr _tweenObject;
 
     public GameObject Target;
@@ -58,6 +58,8 @@ public class TweenManager : MonoBehaviour
 
     public void InitTween()
     {
+        Debug.Log($"Initializing {TweenName}");
+
         if (Target == null)
             Target = this.gameObject;
 
