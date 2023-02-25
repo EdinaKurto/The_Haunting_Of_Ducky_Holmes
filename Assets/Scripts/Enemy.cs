@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
         if (((1 << other.gameObject.layer) & PlayerMask) != 0)
         {
             Debug.Log("Caught the Duck");
-            other.gameObject.GetComponent<PlayerManager>().Caught();
+            GameHandler.Instance.OnCaught();
         }
     }
 

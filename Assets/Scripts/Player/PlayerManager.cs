@@ -10,22 +10,10 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
 
     public UnityEvent OnHide;
     public UnityEvent OnOut;
-    public UnityEvent OnCaught;
 
     public Transform StartPivot;
     public bool HasReachedCheckPoint;
     public Transform CheckPointPivot;
-
-    public void OnReachCheckPoint()
-    {
-        HasReachedCheckPoint = true;
-    }
-
-    public void Respawn()
-    {
-        this.gameObject.transform.position = HasReachedCheckPoint ? CheckPointPivot.position : StartPivot.position;
-        Out();
-    }
 
     public void Hide()
     {
@@ -47,12 +35,6 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         PlayerAnimator.SetBool("Hidden", false);
         Hidden = false;
         OnOut.Invoke();
-    }
-
-    public void Caught()
-    {
-        OnCaught.Invoke();
-        Debug.Log("CAUGHT! - Game Over");
     }
 
     public void PlayStepSound(AudioClip clip)

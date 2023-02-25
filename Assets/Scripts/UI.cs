@@ -1,19 +1,23 @@
-using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class UI : SingletonBehaviour<UI>
 {
-    public string GameScene = "Testing Scene";
-    public string MainMenuScene = "MainMenu";
+    public GameObject GameOverMenu;
+
+    public void InitGameOver()
+    {
+        GameOverMenu.SetActive(true);
+    }
 
     public void UserChoice(string choice)
     {
         switch (choice)
         {
             case "quit":
-                SceneManager.LoadScene(MainMenuScene);
+                GameHandler.Instance.MainMenu();
                 break;
             case "retry":
-                PlayerManager.Instance.Respawn();
+                GameHandler.Instance.Respawn();
                 break;
         }
 
