@@ -12,6 +12,9 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     public UnityEvent OnOut;
     public UnityEvent OnCaught;
 
+    public bool HasReachedCheckPoint;
+    public Transform CheckPointPivot;
+
     public void Hide()
     {
         if (!Hidden)
